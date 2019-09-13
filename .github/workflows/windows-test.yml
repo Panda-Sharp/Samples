@@ -47,9 +47,11 @@ jobs:
       
     - name: Git Push
       run: git subtree push --prefix docs origin gh-pages
+
+    - name: Git Push
+      run: git push origin `git subtree split --prefix docs -b gh-pages` gh-pages --force
     
-      # run: git push origin `git subtree split --prefix docs master`:gh-pages --force
-      # run: git push https://emiliano84:${{secrets.GITHUB_TOKEN}}@github.com/emiliano84/Toolkit.Docs.git gh-pages --force 
+    # run: git push https://emiliano84:${{secrets.GITHUB_TOKEN}}@github.com/emiliano84/Toolkit.Docs.git gh-pages --force 
 
     # - name: Git Subtree
     #   run: git subtree split --prefix docs -b gh-pages
