@@ -16,26 +16,46 @@ jobs:
     - name: Git Config remote.origin.url
       run: git config --global remote.origin.url "https://emiliano84:${{secrets.GITHUB_TOKEN}}@github.com/emiliano84/myRepo.git"
       # https://stackoverflow.com/questions/5343068/is-there-a-way-to-cache-github-credentials-for-pushing-commits
-    
+        
+    - name: git remote add origin
+      run: git remote add origin https://github.com/emiliano84/myRepo
+      # shell: bash
+      # shell: powershell
+
+    - name: git fetch origin
+      run: git fetch origin
+
+    - name: git checkout master
+      run: git checkout master
+      
+    - name: git subtree add
+      run: git subtree add --prefix docs origin/gh-pages  
+      continue-on-error: true
+
+    - name: Docfx
+      id: docfx
+      run: ".github/scripts/docfx.bat"
+  #  docfx metadata docfx_project/docfx.json
+  #  docfx build docfx_project/docfx.json -o docs
+
     - name: Git Add docs
       run: git add docs/* -f
+
     - name: Git Commit
       run: git commit -m "Docs"
+      
+    - name: Git Push
+      run: git subtree push --prefix docs origin gh-pages
+    
+      # run: git push origin `git subtree split --prefix docs master`:gh-pages --force
+      # run: git push https://emiliano84:${{secrets.GITHUB_TOKEN}}@github.com/emiliano84/Toolkit.Docs.git gh-pages --force 
 
-    - name: Git Subtree
-      run: git subtree split --prefix docs -b gh-pages
-
-    # - name: git checkout --orphan gh-pages
-    #   run: git checkout --orphan gh-pages   
+    # - name: Git Subtree
+    #   run: git subtree split --prefix docs -b gh-pages
+ 
 
     # - name: git reset --hard
-    #   run: git reset --hard 
-    # - name: git remote add origin https://emiliano84:${{secrets.GITHUB_TOKEN}}@github.com/emiliano84/Toolkit.Docs.git
-    #   run: git remote add origin 
-    # - name: git fetch origin
-    #   run: git fetch origin
-    # - name: git subtree add
-    #   run: git subtree add --prefix docs origin/gh-pages    
+    #   run: git reset --hard   
     # - name: Git delete branch
     #   run: git push https://emiliano84:${{secrets.GITHUB_TOKEN}}@github.com/emiliano84/Toolkit.Docs.git :gh-pages
 
@@ -43,7 +63,5 @@ jobs:
     # - name: Git Push
     #   run: git push -f
 
-    # - name: Git Push
-    #   run: git subtree push --prefix docs https://emiliano84:${{secrets.GITHUB_TOKEN}}@github.com/emiliano84/Toolkit.Docs.git gh-pages
-      # run: git push origin `git subtree split --prefix docs master`:gh-pages --force
-      # run: git push https://emiliano84:${{secrets.GITHUB_TOKEN}}@github.com/emiliano84/Toolkit.Docs.git gh-pages --force 
+  # job2:
+  #   needs: job1
