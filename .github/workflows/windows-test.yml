@@ -71,7 +71,7 @@ jobs:
       shell: bash
     # force the push of the gh-pages branch to the remote gh-pages branch at origin
     - name: Git Push
-      run: git push -f origin gh-pages:gh-pages
+      run: git push -f https://emiliano84:${{secrets.GITHUB_TOKEN}}@github.com/emiliano84/myRepo.git gh-pages:gh-pages
       shell: bash    
 
     # - name: git reset --hard
