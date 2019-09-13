@@ -27,6 +27,7 @@ jobs:
 
     - name: git checkout master
       run: git checkout master
+      continue-on-error: true
       
     - name: git subtree add
       run: git subtree add --prefix docs origin/gh-pages  
