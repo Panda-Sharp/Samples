@@ -1,1 +1,1 @@
-echo some-text > docs/filename2.txt 
+echo some-text > docs/filename.txt 
